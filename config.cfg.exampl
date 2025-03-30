@@ -1,4 +1,4 @@
-﻿[general]
+[general]
 log_level = DEBUG
 
 [transport.0] #name must be unique, ie: transport.modbus
@@ -7,18 +7,15 @@ log_level = DEBUG
 
 #rs485 / modbus device
 #protocol config files are located in protocols/
-#protocol_version = eg4_v58.custom
-
-protocol_version = eg4_v58.custom
-
-analyze_protocol = true
-write = true
+protocol_version = v0.14
+analyze_protocol = false
+write = false
 
 #in
 #was unit
 address = 1
-port =  /dev/ttyUSB0
-baudrate = 19200
+port = {{serial port, likely /dev/ttyUSB0}}
+baudrate = 9600
 
 #modbus tcp/tls/udp example
 #host = 192.168.0.7
@@ -29,22 +26,23 @@ baudrate = 19200
 #the 'transport' that we want to share this with
 bridge = transport.1
 
-manufacturer = EG4
-model = FLEXPOWER21
+manufacturer = HDHK
+model = HDHK 16CH AC
+#optional; leave blank to autofetch serial from device
+serial_number = HDHK777
 
-serial_number = 
-read_interval = 7
+read_interval = 10
 
 
 [transport.1]
 #connect mqtt
 transport=mqtt
-host = Solar.local
+host = {{mqtt ip / host}}
 port = 1883
-user = Solar
-pass = SolarPowered
+user = {{mqtt username here}}
+pass = {{mqtt password}}
 base_topic = home/inverter/
 error_topic = /error
 json = false
-#discovery_enabled = true
-#discovery_topic = homeassistant
+discovery_enabled = true
+discovery_topic = homeassistant
